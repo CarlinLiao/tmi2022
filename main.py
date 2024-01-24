@@ -15,7 +15,7 @@ from tmi2022.helper import Trainer, Evaluator, collate
 
 from tmi2022.models.GraphTransformer import Classifier
 
-def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_interval_local, train_set=None, val_set=None, train=False, test=False, graphcam=False, resume=None):
+def main(n_class, n_features, data_path, model_path, log_path, task_name, batch_size, log_interval_local, train_set=None, val_set=None, train=False, test=False, graphcam=False, resume=None):
     # All the code from the original main.py script goes here
     # Replace the command-line argument parsing with direct parameter usage
 
@@ -60,7 +60,7 @@ def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_in
     num_epochs = 120 if train else 1
     learning_rate = 1e-3
 
-    model = Classifier(n_class)
+    model = Classifier(n_class, n_features=n_features)
     model = nn.DataParallel(model)
     if resume:
         print('load model{}'.format(resume))
@@ -102,7 +102,7 @@ def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_in
                 sample_batched['image'] = [image.to(device) for image in sample_batched['image']]
                 sample_batched['adj_s'] = [adj_s.to(device) for adj_s in sample_batched['adj_s']]
 
-                preds,labels,loss = trainer.train(sample_batched, model)
+                preds,labels,loss = trainer.train(sample_batched, model, n_features=n_features)
 
                 optimizer.zero_grad()
                 loss.backward()
@@ -133,7 +133,7 @@ def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_in
 
                 for i_batch, sample_batched in enumerate(dataloader_val):
                     #pred, label, _ = evaluator.eval_test(sample_batched, model)
-                    preds, labels, _ = evaluator.eval_test(sample_batched, model, graphcam)
+                    preds, labels, _ = evaluator.eval_test(sample_batched, model, graphcam, n_features=n_features)
                     
                     total += len(labels)
 
