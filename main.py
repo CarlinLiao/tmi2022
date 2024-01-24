@@ -99,6 +99,8 @@ def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_in
                 #scheduler(optimizer, i_batch, epoch, best_pred)
                 scheduler.step(epoch)
 
+                sample_batched = sample_batched.to(device)
+
                 preds,labels,loss = trainer.train(sample_batched, model)
 
                 optimizer.zero_grad()
