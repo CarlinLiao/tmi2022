@@ -99,8 +99,8 @@ def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_in
                 #scheduler(optimizer, i_batch, epoch, best_pred)
                 scheduler.step(epoch)
 
-                sample_batched['image'] = sample_batched['image'].to(device)
-                sample_batched['adj_s'] = sample_batched['adj_s'].to(device)
+                sample_batched['image'] = [image.to(device) for image in sample_batched['image']]
+                sample_batched['adj_s'] = [adj_s.to(device) for adj_s in sample_batched['adj_s']]
 
                 preds,labels,loss = trainer.train(sample_batched, model)
 
