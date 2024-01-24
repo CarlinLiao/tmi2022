@@ -9,16 +9,11 @@ import torch
 import torch.nn as nn
 from torchvision import transforms
 
-from utils.dataset import GraphDataset
-from utils.lr_scheduler import LR_Scheduler
+from tmi2022.utils.dataset import GraphDataset
 from tensorboardX import SummaryWriter
-from helper import Trainer, Evaluator, collate
-from option import Options
+from tmi2022.helper import Trainer, Evaluator, collate
 
-# from utils.saliency_maps import *
-
-from models.GraphTransformer import Classifier
-from models.weight_init import weight_init
+from tmi2022.models.GraphTransformer import Classifier
 
 def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_interval_local, train_set=None, val_set=None, train=False, test=False, graphcam=False, resume=None):
     # All the code from the original main.py script goes here
@@ -62,8 +57,8 @@ def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_in
     ##### creating models #############
     print("creating models......")
 
-    num_epochs = num_epochs
-    learning_rate = lr
+    num_epochs = 120 if train else 1
+    learning_rate = 1e-3
 
     model = Classifier(n_class)
     model = nn.DataParallel(model)

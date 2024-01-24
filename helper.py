@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 from torchvision import transforms
-from utils.metrics import ConfusionMatrix
+from tmi2022.utils.metrics import ConfusionMatrix
 from PIL import Image
 import os
 
