@@ -44,7 +44,7 @@ def main(n_class, data_path, model_path, log_path, task_name, batch_size, log_in
 
     if train:
         ids_train = open(train_set).readlines()
-        dataset_train = GraphDataset(os.path.join(data_path, ""), ids_train, None)
+        dataset_train = GraphDataset(os.path.join(data_path, ""), ids_train, site=None)
         dataloader_train = torch.utils.data.DataLoader(dataset=dataset_train, batch_size=batch_size, num_workers=10, collate_fn=collate, shuffle=True, pin_memory=True, drop_last=True)
         total_train_num = len(dataloader_train) * batch_size
 
