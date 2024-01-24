@@ -99,9 +99,6 @@ def main(n_class, n_features, data_path, model_path, log_path, task_name, batch_
                 #scheduler(optimizer, i_batch, epoch, best_pred)
                 scheduler.step(epoch)
 
-                sample_batched['image'] = [image.to(device) for image in sample_batched['image']]
-                sample_batched['adj_s'] = [adj_s.to(device) for adj_s in sample_batched['adj_s']]
-
                 preds,labels,loss = trainer.train(sample_batched, model, n_features=n_features)
 
                 optimizer.zero_grad()
