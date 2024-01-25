@@ -49,7 +49,7 @@ def main(n_class, n_features, data_path, model_path, log_path, task_name, batch_
         total_train_num = len(dataloader_train) * batch_size
 
     ids_val = open(val_set).readlines()
-    dataset_val = GraphDataset(os.path.join(data_path, ""), ids_val)
+    dataset_val = GraphDataset(os.path.join(data_path, ""), ids_val, site=None)
     dataloader_val = torch.utils.data.DataLoader(dataset=dataset_val, batch_size=batch_size, num_workers=10, collate_fn=collate, shuffle=False, pin_memory=True)
     total_val_num = len(dataloader_val) * batch_size
         
